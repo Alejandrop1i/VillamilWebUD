@@ -1,0 +1,20 @@
+# --- Eclipse / IDE ---
+.settings/
+.metadata/
+.project
+.classpath
+
+# --- Maven ---
+target/
+*.class
+
+# --- Logs y temporales ---
+*.log
+*.tmp
+*.bak
+*.swp
+
+# --- Sistema operativo ---
+Thumbs.db
+.DS_Store
+desktop.ini

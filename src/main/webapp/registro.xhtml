@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Autor: David Villamil
+  Asignatura: Programación Avanzada - Grupo 31
+  Universidad Distrital Francisco José de Caldas - 2026
+  Vista: registro.xhtml (formulario de registro del aspirante con validaciones).
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VillamilWebUD - Registro de Aspirante</title>
+    <h:outputStylesheet library="css" name="estilos.css" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+</h:head>
+<h:body>
+
+    <nav class="navbar navbar-expand-lg navbar-ud shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.xhtml">VillamilWebUD</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.xhtml">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="registro.xhtml">Registro Aspirante</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin.xhtml">Administrador</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card card-ud">
+                    <div class="card-header card-header-ud">
+                        <h3 class="mb-0">Formulario Aspirante</h3>
+                        <small>Complete todos los campos requeridos (*)</small>
+                    </div>
+                    <div class="card-body p-4">
+
+                        <h:messages globalOnly="true" layout="list"
+                                    infoClass="alert alert-success"
+                                    errorClass="alert alert-danger"
+                                    warnClass="alert alert-warning" />
+
+                        <h:form prependId="false" styleClass="needs-validation">
+
+                            <div class="mb-3">
+                                <h:outputLabel for="id_p" styleClass="form-label">
+                                    Identificación <span class="required-mark">*</span>
+                                </h:outputLabel>
+                                <h:inputText id="id_p" value="#{asp.dto.id_p}"
+                                             styleClass="form-control"
+                                             required="true"
+                                             requiredMessage="La identificación es obligatoria."
+                                             converterMessage="La identificación debe ser un número entero válido."
+                                             validatorMessage="La identificación debe tener entre 6 y 12 dígitos.">
+                                    <f:validateLongRange minimum="100000" maximum="999999999999" />
+                                </h:inputText>
+                                <h:message for="id_p" styleClass="mensaje-error" />
+                            </div>
+
+                            <div class="mb-3">
+                                <h:outputLabel for="nombres" styleClass="form-label">
+                                    Nombres <span class="required-mark">*</span>
+                                </h:outputLabel>
+                                <h:inputText id="nombres" value="#{asp.dto.nombres}"
+                                             styleClass="form-control"
+                                             required="true"
+                                             requiredMessage="Los nombres son obligatorios."
+                                             validatorMessage="Los nombres deben tener entre 2 y 60 caracteres.">
+                                    <f:validateLength minimum="2" maximum="60" />
+                                    <f:validateRegex pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" />
+                                </h:inputText>
+                                <h:message for="nombres" styleClass="mensaje-error" />
+                            </div>
+
+                            <div class="mb-3">
+                                <h:outputLabel for="apellidos" styleClass="form-label">
+                                    Apellidos <span class="required-mark">*</span>
+                                </h:outputLabel>
+                                <h:inputText id="apellidos" value="#{asp.dto.apellidos}"
+                                             styleClass="form-control"
+                                             required="true"
+                                             requiredMessage="Los apellidos son obligatorios."
+                                             validatorMessage="Los apellidos deben tener entre 2 y 60 caracteres.">
+                                    <f:validateLength minimum="2" maximum="60" />
+                                    <f:validateRegex pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" />
+                                </h:inputText>
+                                <h:message for="apellidos" styleClass="mensaje-error" />
+                            </div>
+
+                            <div class="mb-3">
+                                <h:outputLabel for="correo" styleClass="form-label">
+                                    Correo electrónico <span class="required-mark">*</span>
+                                </h:outputLabel>
+                                <h:inputText id="correo" value="#{asp.dto.correo}"
+                                             styleClass="form-control"
+                                             required="true"
+                                             requiredMessage="El correo es obligatorio."
+                                             validatorMessage="Ingrese un correo electrónico válido (ej. nombre@dominio.com).">
+                                    <f:validateRegex pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" />
+                                </h:inputText>
+                                <h:message for="correo" styleClass="mensaje-error" />
+                            </div>
+
+                            <div class="mb-3">
+                                <h:outputLabel for="telefono" styleClass="form-label">
+                                    Teléfono <span class="required-mark">*</span>
+                                </h:outputLabel>
+                                <h:inputText id="telefono" value="#{asp.dto.telefono}"
+                                             styleClass="form-control"
+                                             required="true"
+                                             requiredMessage="El teléfono es obligatorio."
+                                             validatorMessage="El teléfono debe contener entre 7 y 15 dígitos.">
+                                    <f:validateRegex pattern="^[0-9]{7,15}$" />
+                                </h:inputText>
+                                <h:message for="telefono" styleClass="mensaje-error" />
+                            </div>
+
+                            <div class="mb-4">
+                                <h:outputLabel for="pro_aca" styleClass="form-label">
+                                    Programa académico <span class="required-mark">*</span>
+                                </h:outputLabel>
+                                <h:selectOneMenu id="pro_aca"
+                                                 value="#{asp.dto.pro_acad.cod}"
+                                                 styleClass="form-select"
+                                                 required="true"
+                                                 requiredMessage="Debe seleccionar un programa académico.">
+                                    <f:selectItem itemValue="-1"
+                                                  itemLabel="-- Seleccione un programa --"
+                                                  noSelectionOption="true" />
+                                    <f:selectItems value="#{asp.listaPa}" var="p"
+                                                   itemValue="#{asp.listaPa.indexOf(p)}"
+                                                   itemLabel="#{p.nombre_prog}" />
+                                </h:selectOneMenu>
+                                <h:message for="pro_aca" styleClass="mensaje-error" />
+                            </div>
+
+                            <div class="d-flex gap-2 justify-content-end">
+                                <h:commandButton value="Limpiar"
+                                                 action="#{asp.limpiar}"
+                                                 immediate="true"
+                                                 styleClass="btn btn-outline-secondary" />
+                                <h:commandButton value="Registrar"
+                                                 action="#{asp.registrar}"
+                                                 styleClass="btn btn-ud" />
+                            </div>
+
+                        </h:form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <a href="admin.xhtml" class="btn btn-link">Ver listado de aspirantes &#187;</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-ud">
+        <div class="container">
+            <p class="mb-0">
+                <strong>David Villamil</strong> &#8226; Programación Avanzada - Grupo 31
+                &#8226; Universidad Distrital Francisco José de Caldas &#8226; 2026
+            </p>
+        </div>
+    </footer>
+
+</h:body>
+</html>

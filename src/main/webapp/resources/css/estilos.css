@@ -1,0 +1,107 @@
+body {
+    background: linear-gradient(135deg, #e7d9b4 0%, #9ed1b7 50%, #78a890 100%);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: #092b5a;
+}
+
+.navbar-ud {
+    background-color: #092b5a !important;
+}
+
+.navbar-ud .navbar-brand,
+.navbar-ud .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+.navbar-ud .nav-link:hover {
+    color: #e7d9b4 !important;
+}
+
+.card-ud {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(9, 43, 90, 0.18);
+    border: none;
+    margin-top: 2rem;
+}
+
+.card-header-ud {
+    background: linear-gradient(90deg, #092b5a 0%, #09738a 100%);
+    color: #ffffff;
+    border-top-left-radius: 1rem !important;
+    border-top-right-radius: 1rem !important;
+    padding: 1rem 1.5rem;
+}
+
+.btn-ud {
+    background-color: #09738a;
+    color: #ffffff;
+    border: none;
+    font-weight: 500;
+    border-radius: 0.6rem;
+    transition: all 0.3s ease;
+}
+
+.btn-ud:hover {
+    background-color: #78a890;
+    color: #092b5a;
+}
+
+.footer-ud {
+    background-color: #092b5a;
+    color: #ffffff;
+    padding: 1rem 0;
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.table-ud thead {
+    background-color: #09738a;
+    color: #ffffff;
+}
+
+.table-ud tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table-ud tbody tr:hover {
+    background-color: #e7d9b4;
+    transition: background-color 0.3s ease;
+}
+
+.required-mark {
+    color: #09738a;
+    font-weight: bold;
+}
+
+.mensaje-error {
+    color: #092b5a;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.hero {
+    padding: 3rem 1rem;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 6px 20px rgba(9, 43, 90, 0.12);
+}
+
+h1, h2, h3, h4, h5 {
+    color: #092b5a;
+    font-weight: 600;
+}
+
+a {
+    color: #09738a;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #78a890;
+}
