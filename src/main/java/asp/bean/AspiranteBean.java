@@ -26,6 +26,7 @@ public class AspiranteBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Aspirante dto = new Aspirante();
+	private Aspirante seleccionado;
 	private ArrayList<Aspirante> listaAs = AspiranteDAO.lista_A;
 	private ArrayList<ProgAcad> listaPa = ProgAcadDAO.lista_P;
 
@@ -94,7 +95,24 @@ public class AspiranteBean implements Serializable {
 		dto = new Aspirante();
 		return null;
 	}
+
 	public int obtenerIndice(Object aspirante) {
 	    return listaAs.indexOf(aspirante) + 1;
+	}
+
+	/**
+	 * Acción usada por el botón "Ver detalle" de la tabla en admin.xhtml.
+	 * Guarda el aspirante seleccionado para que el p:dialog lo muestre.
+	 */
+	public void verDetalle(Aspirante aspirante) {
+		this.seleccionado = aspirante;
+	}
+
+	public Aspirante getSeleccionado() {
+		return seleccionado;
+	}
+
+	public void setSeleccionado(Aspirante seleccionado) {
+		this.seleccionado = seleccionado;
 	}
 }

@@ -130,8 +130,64 @@
                                       sortBy="#{aspirante.fecha_reg}">
                                 <h:outputText value="#{aspirante.fecha_reg}" />
                             </p:column>
+
+                            <p:column headerText="Acciones" exportable="false">
+                                <p:commandButton value="Ver"
+                                                 icon="pi pi-eye"
+                                                 action="#{asp.verDetalle(aspirante)}"
+                                                 update=":dlgDetalle"
+                                                 oncomplete="PF('dlgDetalleAsp').show()"
+                                                 styleClass="rounded-button" />
+                            </p:column>
                         </p:dataTable>
                     </h:form>
+
+                    <!-- ============================================================
+                         Componente PrimeFaces 5: p:dialog
+                         Ventana modal flotante. Se muestra/oculta vía
+                         JavaScript a través de su widgetVar.
+                         Atributos usados:
+                           header        — título visible
+                           widgetVar     — nombre JS para mostrar/ocultar
+                           modal         — bloquea el resto de la página
+                           closable      — botón X para cerrar
+                           resizable     — permite redimensionar
+                           width/height  — dimensiones iniciales
+                           position      — "center", "top", etc.
+                         ============================================================ -->
+                    <p:dialog id="dlgDetalle"
+                              header="Detalle del aspirante"
+                              widgetVar="dlgDetalleAsp"
+                              modal="true"
+                              closable="true"
+                              resizable="false"
+                              width="500"
+                              position="center">
+                        <h:panelGroup rendered="#{not empty asp.seleccionado}">
+                            <h:panelGrid columns="2" styleClass="ud-detalle-grid">
+                                <h:outputText value="Identificación:" styleClass="fw-bold" />
+                                <h:outputText value="#{asp.seleccionado.id_p}" />
+
+                                <h:outputText value="Nombres:" styleClass="fw-bold" />
+                                <h:outputText value="#{asp.seleccionado.nombres}" />
+
+                                <h:outputText value="Apellidos:" styleClass="fw-bold" />
+                                <h:outputText value="#{asp.seleccionado.apellidos}" />
+
+                                <h:outputText value="Correo:" styleClass="fw-bold" />
+                                <h:outputText value="#{asp.seleccionado.correo}" />
+
+                                <h:outputText value="Teléfono:" styleClass="fw-bold" />
+                                <h:outputText value="#{asp.seleccionado.telefono}" />
+
+                                <h:outputText value="Programa académico:" styleClass="fw-bold" />
+                                <h:outputText value="#{asp.seleccionado.pro_acad.nombre_prog}" />
+
+                                <h:outputText value="Fecha de registro:" styleClass="fw-bold" />
+                                <h:outputText value="#{asp.seleccionado.fecha_reg}" />
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </p:dialog>
                 </h:panelGroup>
 
             </div>
