@@ -198,21 +198,32 @@
             </div>
 
             <div class="col-12">
-                <div class="card card-ud">
-                    <div class="card-header card-header-ud d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="mb-0">Historial de simulaciones</h3>
-                            <small>Total acumulado: <strong>#{cdt.totalSimulaciones}</strong></small>
-                        </div>
+                <!-- ============================================================
+                     Componente PrimeFaces 4: p:accordionPanel
+                     Contenedor con secciones plegables. Solo una pestaña
+                     puede estar abierta a la vez (a menos que se use
+                     multiple="true"). Cada sección es un p:tab.
+                     Atributos usados:
+                       activeIndex   — índice de la pestaña abierta al cargar
+                       multiple      — permite abrir varias a la vez
+                       dynamic       — carga el contenido bajo demanda (lazy)
+                       cache         — almacena el contenido tras primera carga
+                       styleClass    — clase CSS adicional
+                     ============================================================ -->
+                <p:accordionPanel id="accordionCdt"
+                                  activeIndex="0"
+                                  multiple="false"
+                                  styleClass="ud-accordion mt-2">
+
+                    <p:tab title="Historial de simulaciones (Total: #{cdt.totalSimulaciones})">
                         <h:form prependId="false">
                             <h:commandButton value="Limpiar historial"
                                              action="#{cdt.limpiarHistorial}"
                                              immediate="true"
                                              rendered="#{cdt.totalSimulaciones > 0}"
-                                             styleClass="btn btn-outline-light btn-sm" />
+                                             styleClass="btn btn-outline-secondary btn-sm mb-3" />
                         </h:form>
-                    </div>
-                    <div class="card-body p-4">
+
                         <h:panelGroup rendered="#{cdt.totalSimulaciones == 0}">
                             <div class="alert alert-warning text-center mb-0">
                                 Aún no hay simulaciones registradas en esta sesión.
@@ -220,46 +231,75 @@
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{cdt.totalSimulaciones > 0}">
-                            <div class="table-responsive">
-                                <h:dataTable value="#{cdt.historial}" var="sim"
-                                             styleClass="table table-striped table-bordered table-hover table-ud align-middle">
-                                    <h:column>
-                                        <f:facet name="header">Fecha</f:facet>
+                            <h:form prependId="false">
+                                <p:dataTable value="#{cdt.historial}" var="sim"
+                                             paginator="true" rows="5"
+                                             rowsPerPageTemplate="5,10,20"
+                                             emptyMessage="Sin simulaciones."
+                                             styleClass="ud-datatable">
+                                    <p:column headerText="Fecha" sortBy="#{sim.fechaCalculo}">
                                         <h:outputText value="#{sim.fechaCalculo}">
                                             <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss" />
                                         </h:outputText>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Inversión</f:facet>
+                                    </p:column>
+                                    <p:column headerText="Inversión" sortBy="#{sim.inversion}">
                                         <h:outputText value="#{sim.inversion}">
                                             <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0" groupingUsed="true" />
                                         </h:outputText>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Interés E.A.</f:facet>
+                                    </p:column>
+                                    <p:column headerText="Interés E.A." sortBy="#{sim.interesPorcentaje}">
                                         <h:outputText value="#{sim.interesPorcentaje}%" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Plazo</f:facet>
+                                    </p:column>
+                                    <p:column headerText="Plazo" sortBy="#{sim.plazoDias}">
                                         <h:outputText value="#{sim.plazoDias} días" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Ganancia neta</f:facet>
+                                    </p:column>
+                                    <p:column headerText="Ganancia neta" sortBy="#{sim.gananciaNeta}">
                                         <h:outputText value="#{sim.gananciaNeta}">
                                             <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" groupingUsed="true" />
                                         </h:outputText>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">Valor final</f:facet>
+                                    </p:column>
+                                    <p:column headerText="Valor final" sortBy="#{sim.valorFuturo}">
                                         <h:outputText value="#{sim.valorFuturo}">
                                             <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" groupingUsed="true" />
                                         </h:outputText>
-                                    </h:column>
-                                </h:dataTable>
-                            </div>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
                         </h:panelGroup>
-                    </div>
-                </div>
+                    </p:tab>
+
+                    <p:tab title="Información del cálculo">
+                        <p>
+                            El simulador aplica la fórmula de <strong>interés simple</strong>
+                            sobre un año comercial de <strong>360 días</strong>:
+                        </p>
+                        <pre class="bg-light p-3 rounded">
+ganancia      = inversión × (interés/100) × (plazoDías / 360)
+impuesto      = ganancia × 0.04   (retención del 4% sobre el rendimiento)
+ganancia_neta = ganancia − impuesto
+valor_futuro  = inversión + ganancia_neta
+                        </pre>
+                        <p class="mb-0">
+                            Las simulaciones se guardan en memoria mediante el DAO
+                            <code>SimulacionCDTDAO</code> y se conservan mientras dure
+                            la sesión del navegador.
+                        </p>
+                    </p:tab>
+
+                    <p:tab title="Rangos válidos de entrada">
+                        <ul>
+                            <li><strong>Inversión:</strong> entre $100.000 y $5.000.000.000 COP</li>
+                            <li><strong>Interés E.A.:</strong> entre 0.1% y 100%</li>
+                            <li><strong>Plazo:</strong> entre 30 y 1.800 días</li>
+                        </ul>
+                        <p class="mb-0 text-muted">
+                            Si los datos están fuera de rango, el modelo lanza
+                            <code>IllegalArgumentException</code> y el bean muestra
+                            un mensaje de error en pantalla.
+                        </p>
+                    </p:tab>
+
+                </p:accordionPanel>
             </div>
 
         </div>
