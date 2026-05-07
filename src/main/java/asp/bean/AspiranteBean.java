@@ -8,6 +8,14 @@ package asp.bean;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.pie.PieChartDataSet;
+import org.primefaces.model.charts.pie.PieChartModel;
 
 import asp.modelo.Aspirante;
 import asp.modelo.AspiranteDAO;
@@ -114,5 +122,46 @@ public class AspiranteBean implements Serializable {
 
 	public void setSeleccionado(Aspirante seleccionado) {
 		this.seleccionado = seleccionado;
+	}
+
+	/**
+	 * Modelo de datos para p:chart (gráfica de torta).
+	 * Cuenta cuántos aspirantes hay por cada programa académico.
+	 */
+	public PieChartModel getGraficaPrograma() {
+		PieChartModel model = new PieChartModel();
+		ChartData data = new ChartData();
+		PieChartDataSet ds = new PieChartDataSet();
+
+		Map<String, Integer> conteo = new LinkedHashMap<>();
+		for (Aspirante a : listaAs) {
+			String prog = (a.getPro_acad() != null && a.getPro_acad().getNombre_prog() != null)
+					? a.getPro_acad().getNombre_prog()
+					: "Sin programa";
+			conteo.merge(prog, 1, Integer::sum);
+		}
+
+		List<Number> valores = new ArrayList<>();
+		List<String> etiquetas = new ArrayList<>();
+		for (Map.Entry<String, Integer> e : conteo.entrySet()) {
+			etiquetas.add(e.getKey());
+			valores.add(e.getValue());
+		}
+
+		List<String> colores = Arrays.asList(
+				"#092b5a", "#09738a", "#78a890", "#e7d9b4",
+				"#9ed1b7", "#5b8aa6", "#c97b63", "#6c8ebf");
+
+		ds.setData(valores);
+		ds.setBackgroundColor(colores);
+		data.addChartDataSet(ds);
+		data.setLabels(etiquetas);
+
+		model.setData(data);
+		return model;
+	}
+
+	public boolean isHayAspirantes() {
+		return listaAs != null && !listaAs.isEmpty();
 	}
 }
