@@ -45,6 +45,13 @@
             <artifactId>weld-servlet-shaded</artifactId>
             <version>4.0.2.Final</version>
         </dependency>
+        <!-- PrimeFaces 14 (clasificador jakarta para Jakarta Faces 4.x / Tomcat 10+) -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>14.0.0</version>
+            <classifier>jakarta</classifier>
+        </dependency>
     </dependencies>
 
 </project>
