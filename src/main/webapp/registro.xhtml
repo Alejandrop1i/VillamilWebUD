@@ -34,12 +34,27 @@
     <main class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="card card-ud">
-                    <div class="card-header card-header-ud">
-                        <h3 class="mb-0">Formulario Aspirante</h3>
-                        <small>Complete todos los campos requeridos (*)</small>
-                    </div>
-                    <div class="card-body p-4">
+                <!-- ============================================================
+                     Componente PrimeFaces 2: p:panel
+                     Contenedor con cabecera y cuerpo, plegable mediante el
+                     atributo toggleable="true". Soporta facets "header",
+                     "footer" y "options". Útil para agrupar formularios
+                     largos o resultados.
+                     Atributos usados:
+                       header        — texto de la cabecera
+                       toggleable    — permite plegar/desplegar
+                       toggleSpeed   — duración de la animación (ms)
+                       styleClass    — clase CSS adicional
+                     ============================================================ -->
+                <p:panel id="panelFormAsp"
+                         header="Formulario Aspirante"
+                         toggleable="true"
+                         toggleSpeed="300"
+                         styleClass="ud-panel mt-4">
+
+                    <f:facet name="footer">
+                        <h:outputText value="Complete todos los campos requeridos (*)" styleClass="text-muted" />
+                    </f:facet>
 
                         <h:messages globalOnly="true" layout="list"
                                     infoClass="alert alert-success"
@@ -151,8 +166,7 @@
                             </div>
 
                         </h:form>
-                    </div>
-                </div>
+                </p:panel>
 
                 <div class="text-center mt-3">
                     <a href="admin.xhtml" class="btn btn-link">Ver listado de aspirantes &#187;</a>
