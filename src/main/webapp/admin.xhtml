@@ -64,47 +64,74 @@
                         <strong>#{asp.listaAs.size()}</strong>
                     </p>
 
-                    <div class="table-responsive">
-                        <h:dataTable value="#{asp.listaAs}" var="aspirante"
-                                     styleClass="table table-striped table-bordered table-hover table-ud align-middle">
+                    <!-- ============================================================
+                         Componente PrimeFaces 3: p:dataTable
+                         Tabla avanzada con paginación, ordenamiento por columna,
+                         filtros, selección, exportación, etc.
+                         Atributos usados:
+                           value         — colección que alimenta la tabla
+                           var           — nombre de variable en cada fila
+                           paginator     — true para mostrar paginador
+                           rows          — filas por página
+                           rowsPerPageTemplate — opciones de tamaño de página
+                           emptyMessage  — mensaje cuando no hay datos
+                           sortBy / sortMode — ordenamiento (definido por p:column)
+                           filterBy / filterMatchMode — filtrado por columna
+                           paginatorPosition — "top" | "bottom" | "both"
+                         ============================================================ -->
+                    <h:form prependId="false">
+                        <p:dataTable id="tablaAspirantes"
+                                     value="#{asp.listaAs}"
+                                     var="aspirante"
+                                     paginator="true"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,20"
+                                     paginatorPosition="bottom"
+                                     emptyMessage="No hay aspirantes registrados."
+                                     styleClass="ud-datatable">
 
-                            <h:column>
-                                <f:facet name="header">Identificación</f:facet>
+                            <p:column headerText="Identificación"
+                                      sortBy="#{aspirante.id_p}"
+                                      filterBy="#{aspirante.id_p}"
+                                      filterMatchMode="contains">
                                 <h:outputText value="#{aspirante.id_p}" />
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Nombres</f:facet>
+                            <p:column headerText="Nombres"
+                                      sortBy="#{aspirante.nombres}"
+                                      filterBy="#{aspirante.nombres}"
+                                      filterMatchMode="contains">
                                 <h:outputText value="#{aspirante.nombres}" />
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Apellidos</f:facet>
+                            <p:column headerText="Apellidos"
+                                      sortBy="#{aspirante.apellidos}"
+                                      filterBy="#{aspirante.apellidos}"
+                                      filterMatchMode="contains">
                                 <h:outputText value="#{aspirante.apellidos}" />
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Correo</f:facet>
+                            <p:column headerText="Correo">
                                 <h:outputText value="#{aspirante.correo}" />
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Teléfono</f:facet>
+                            <p:column headerText="Teléfono">
                                 <h:outputText value="#{aspirante.telefono}" />
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Programa Académico</f:facet>
+                            <p:column headerText="Programa Académico"
+                                      sortBy="#{aspirante.pro_acad.nombre_prog}"
+                                      filterBy="#{aspirante.pro_acad.nombre_prog}"
+                                      filterMatchMode="contains">
                                 <h:outputText value="#{aspirante.pro_acad.nombre_prog}" />
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Fecha de Registro</f:facet>
+                            <p:column headerText="Fecha de Registro"
+                                      sortBy="#{aspirante.fecha_reg}">
                                 <h:outputText value="#{aspirante.fecha_reg}" />
-                            </h:column>
-
-                        </h:dataTable>
-                    </div>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
                 </h:panelGroup>
 
             </div>
